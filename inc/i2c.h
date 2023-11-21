@@ -11,6 +11,9 @@
 // Gets calcualted by the core clock and scl freq macros
 #define TWBR_VALUE (((CORE_CLOCK / SCL_FREQ) - 16) / 2)
 
+#define READ_OPERATION 1
+#define WRITE_OPERATION 0
+
 /**
  * @brief initializes the i2c communication registers
 */
