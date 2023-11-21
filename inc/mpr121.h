@@ -35,13 +35,13 @@ typedef struct __attribute__((__packed__)) T_status
   uint16_t ovcf : 1;
 } T_status;
 
-#define T_THRESHOLD_WRITE_START 0x41
+#define T_THRESHOLD_START 0x41
 #define T_THRESHOLD_INCREMENT 0x02
-#define T_THRESHOLD_WRITE_END 0x59
+#define T_THRESHOLD_END 0x59
 
 #define R_THRESHOLD_START 0x42
 #define R_THRESHOLD_INCREMENT 0x02
-#define R_THRESHOLD_START 0x5A
+#define R_THRESHOLD_END 0x5A
 
 #define DEBOUNCE_REGISTER 0x5B
 #define DEBOUNCE_DT(N) (N & 7)
@@ -62,6 +62,6 @@ typedef struct Mpr121
 void mpr121_setup(uint8_t i2c_address, uint8_t electrode_config, uint8_t debounce,
 uint8_t filter_cdt);
 
-uint16_t mpr121_get_pressed(int i2c_address);
+void mpr121_get_pressed(int i2c_address, T_status* dst);
 
 #endif

@@ -45,10 +45,18 @@ void i2c_write(uint8_t data)
   TWCR = (1 << TWINT) | (1 << TWEN);
   while (!(TWCR & (1<<TWINT)));
 }
+#include "ssd1306.h"
 
-int8_t i2c_read()
+int8_t i2c_read_ack()
 {
   TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWEA);
+  while (!(TWCR & (1<<TWINT)));
+  return TWDR;
+}
+
+int8_t i2c_read_nak()
+{
+  TWCR = (1<<TWINT)|(1<<TWEN);
   while (!(TWCR & (1<<TWINT)));
   return TWDR;
 }

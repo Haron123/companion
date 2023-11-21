@@ -6,7 +6,7 @@
 
 // Change these to fit ur system
 #define CORE_CLOCK 16000000ULL
-#define SCL_FREQ 400000ULL
+#define SCL_FREQ 40000ULL
 
 // Gets calcualted by the core clock and scl freq macros
 #define TWBR_VALUE (((CORE_CLOCK / SCL_FREQ) - 16) / 2)
@@ -43,6 +43,8 @@ void i2c_write(uint8_t data);
 /**
  * @brief todo
 */
-int8_t i2c_read();
+int8_t i2c_read_ack();
+
+int8_t i2c_read_nak();
 
 #endif
