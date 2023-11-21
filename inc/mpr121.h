@@ -15,8 +15,6 @@ ELE = Electrode
 #define T_STATUS_L 0x00
 #define T_STATUS_H 0x01
 
-#define I2C_ADDRESS 0x00
-
 typedef struct __attribute__((__packed__)) T_status
 {
   uint16_t ele0 : 1;
