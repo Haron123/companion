@@ -6,24 +6,44 @@
  * @param arr1_size size of the first array
  * @param arr2 the second array
  * @param arr2_size size of the second array
- * @retval 1 if theyre the same, 0 if theyre different
+ * @retval a percentage of match between 0-100 representing percent
 */
 static uint8_t compare_array(uint8_t* arr1, uint8_t arr1_size, uint8_t* arr2, uint8_t arr2_size)
 {
+  uint8_t matches = 0;
+  uint8_t max_size = arr2.size;
+
+  uint8_t* bigger_array = arr1;
+  uint8_t* smaller_array = arr2;
+
+  uint8_t index_increase = 0;
+
   if(arr1_size != arr2_size)
   {
     return 0;
   }
 
-  for(uint8_t i = 0; i < arr1_size; i++)
+  if(min_size > arr2_size)
   {
-    if(arr1[i] != arr2[i])
-    {
-      return 0;
-    }
+    max_size = arr1_size;
+    bigger_array = arr1;
+    smaller_array = arr2;
   }
 
-  return 1;
+  for(uint8_t i = 0; i < max_size; i++)
+  {
+    if(smaller_array[i - index_increase] == bigger_array[i])
+    {
+      matches++;
+    }
+    else
+    {
+      index_increase++;
+    }
+  }
+  matches *= 100;
+
+  return matches/max_size;
 }
 
 /**
@@ -77,7 +97,10 @@ void observer_inform(Gesture_Observer* observer, Button pressed_button)
 {
   if(observer->trace_size < MAX_TRACE)
   {
-    observer->current_trace[observer->trace_size++] = pressed_button;
+    if(observer->current_trace[observer->trace_size] == pressed_button)
+    {
+      observer->current_trace[observer->trace_size++] = pressed_button;
+    }
   }
 }
 
@@ -99,7 +122,7 @@ uint8_t observer_get_result(Gesture_Observer* observer)
 {
   for(uint8_t i = 0; i < observer->gesture_amount; i++)
   {
-    if(compare_array((uint8_t*)(&(observer->gestures[i].trace)), observer->gestures[i].gesture_size, observer->current_trace, observer->trace_size))
+    if(compare_array((uint8_t*)(&(observer->gestures[i].trace)), observer->gestures[i].gesture_size, observer->current_trace, observer->trace_size) > 90)
     {
       return observer->gestures[i].id;
     }
