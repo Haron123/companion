@@ -6,7 +6,7 @@ LDFLAGS :=
 
 CC := avr-gcc
 CFLAGS := -Wall -Oz -I inc/ -DF_CPU=$(cpufreq) -mmcu=$(device) --param=min-pagesize=0
-OBJ := main.o i2c.o mpr121.o ssd1306.o battery_indic.o system_time.o draw.o
+OBJ := main.o i2c.o mpr121.o ssd1306.o battery_indic.o system_time.o draw.o gesture.o
 
 CLEAN_TARGET := *.o *.bin *.hex
 
@@ -15,7 +15,7 @@ all: project upload clean
 project: $(OBJ)
 	$(CC) -o $@ $^
 	avr-gcc $(LDFLAGS) -mmcu=$(device) -o main.bin $(OBJ)
-	avr-objcopy -O ihex -R .eeprom main.bin main.hex
+	avr-objcopy -O ihex -R .eeprom main.bin main.hex 
 
 
 %.o: src/%.c
