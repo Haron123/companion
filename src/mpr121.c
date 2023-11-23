@@ -77,7 +77,7 @@ void mpr121_get_filtered_pressed(uint8_t i2c_address, uint16_t* baseline, uint16
   for(uint8_t i = ELECTRODE_DATA_START; i <= ELECTRODE_DATA_END; i += ELECTRODE_DATA_INCREMENT)
   {
     current_data = read_register(i2c_address, i) | ((read_register(i2c_address, i+1) & 3) << 8);
-    if(current_data < (baseline[current_iter++] - 2))
+    if(current_data < (baseline[current_iter++] - 1))
     {
       *dst |= (1 << current_iter);
     }

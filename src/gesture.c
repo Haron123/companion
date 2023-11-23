@@ -10,18 +10,14 @@
 */
 static uint8_t compare_array(uint8_t* arr1, uint8_t arr1_size, uint8_t* arr2, uint8_t arr2_size)
 {
-  uint8_t matches = 0;
-  uint8_t max_size = arr2.size;
+  uint16_t matches = 0;
+  uint8_t min_size = arr1_size;
+  uint8_t max_size = arr2_size;
 
-  uint8_t* bigger_array = arr1;
-  uint8_t* smaller_array = arr2;
+  uint8_t* bigger_array = arr2;
+  uint8_t* smaller_array = arr1;
 
   uint8_t index_increase = 0;
-
-  if(arr1_size != arr2_size)
-  {
-    return 0;
-  }
 
   if(min_size > arr2_size)
   {
@@ -97,7 +93,7 @@ void observer_inform(Gesture_Observer* observer, Button pressed_button)
 {
   if(observer->trace_size < MAX_TRACE)
   {
-    if(observer->current_trace[observer->trace_size] == pressed_button)
+    if(observer->current_trace[observer->trace_size-1] != pressed_button)
     {
       observer->current_trace[observer->trace_size++] = pressed_button;
     }
@@ -120,11 +116,24 @@ void observer_clear_trace(Gesture_Observer* observer)
 */
 uint8_t observer_get_result(Gesture_Observer* observer)
 {
+  uint8_t gesture_size = 0;
+  uint8_t trace_size = 0;
+
   for(uint8_t i = 0; i < observer->gesture_amount; i++)
   {
-    if(compare_array((uint8_t*)(&(observer->gestures[i].trace)), observer->gestures[i].gesture_size, observer->current_trace, observer->trace_size) > 90)
+    gesture_size = observer->gestures[i].gesture_size;
+    trace_size = observer->trace_size;
+
+    if(gesture_size == trace_size || gesture_size == trace_size + SIZE_ERROR_ALLOWANCE || gesture_size == trace_size - SIZE_ERROR_ALLOWANCE)
     {
-      return observer->gestures[i].id;
+      if(compare_array((uint8_t*)(&(observer->gestures[i].trace)),gesture_size, observer->current_trace, trace_size) >= (((gesture_size-ACCURACY_ERROR_ALLOWANCE) * 100) / gesture_size))
+      {
+        return observer->gestures[i].id;
+      }
+      else
+      {
+        compare_array((uint8_t*)(&(observer->gestures[i].trace)),gesture_size, observer->current_trace, trace_size);
+      }
     }
   }
 

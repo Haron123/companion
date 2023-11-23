@@ -12,6 +12,12 @@ typedef struct Canvas
 } Canvas;
 
 /**
+ * @brief sets the canvas buffer to zero
+ * @retval a correctly initialized canvas
+*/
+Canvas canvas_create();
+
+/**
  * @brief draws a single spot inside of the canvas
  * @param x the x coordinate of the spot
  * @param y the y coordinate of the spot

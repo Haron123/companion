@@ -5,8 +5,11 @@
 
 typedef uint8_t Button;
 
-#define MAX_TRACE 10
+#define MAX_TRACE 30
 #define MAX_GESTURES 5
+
+#define ACCURACY_ERROR_ALLOWANCE 2
+#define SIZE_ERROR_ALLOWANCE 2
 
 typedef struct Gesture
 {
