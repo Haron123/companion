@@ -47,4 +47,10 @@ void oled_write_int(uint16_t number);
 */
 void oled_set_cursor(uint8_t x_pos, uint8_t y_pos);
 
+/**
+ * @brief writes a single byte to the frame buffer of the oled display
+ * @param byte the byte thats to be written
+*/
+void oled_write_byte(uint8_t byte);
+
 #endif

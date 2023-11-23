@@ -250,3 +250,12 @@ void oled_set_cursor(uint8_t x_pos, uint8_t y_pos)
   i2c_write(0x10 | (x_pos >> 4));          // set high nibble of start column
   i2c_stop(); 
 }
+
+void oled_write_byte(uint8_t byte)
+{
+	i2c_start();
+  i2c_write(OLED_ADDR);
+  i2c_write(OLED_DAT_MODE);
+	i2c_write(byte);
+	i2c_stop();
+}
