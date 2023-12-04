@@ -10,7 +10,7 @@
 */
 static uint8_t compare_array(uint8_t* arr1, uint8_t arr1_size, uint8_t* arr2, uint8_t arr2_size)
 {
-  uint16_t matches = 0;
+  int16_t matches = 0;
   uint8_t min_size = arr1_size;
   uint8_t max_size = arr2_size;
 
@@ -35,8 +35,15 @@ static uint8_t compare_array(uint8_t* arr1, uint8_t arr1_size, uint8_t* arr2, ui
     else
     {
       index_increase++;
+      matches--;
+
     }
   }
+  if(matches < 0)
+  {
+    matches = 0;
+  }
+
   matches *= 100;
 
   return matches/max_size;
@@ -44,13 +51,18 @@ static uint8_t compare_array(uint8_t* arr1, uint8_t arr1_size, uint8_t* arr2, ui
 
 /**
  * @brief Creates a gesture with the given id
+ * @param id the id of the gesture
+ * @param accuracy_error_allowance determines how many wrong inputs can be done and still be interpreted as right
+ * @param size_error_allowance determines how many more/less inputs can be done and still be interpreted as right
  * @retval a gesture with the given id
 */
-Gesture gesture_create(uint8_t id)
+Gesture gesture_create(uint8_t id, uint8_t accuracy_error_allowance, uint8_t size_error_allowance)
 {
   Gesture temp;
   temp.id = id;
   temp.gesture_size = 0;
+  temp.accuracy_error_allowance = accuracy_error_allowance;
+  temp.size_error_allowance = size_error_allowance;
 
   return temp;
 }
@@ -93,7 +105,7 @@ void observer_inform(Gesture_Observer* observer, Button pressed_button)
 {
   if(observer->trace_size < MAX_TRACE)
   {
-    if(observer->current_trace[observer->trace_size-1] != pressed_button)
+    if(observer->trace_size == 0 || (observer->trace_size > 0 && observer->current_trace[observer->trace_size-1] != pressed_button))
     {
       observer->current_trace[observer->trace_size++] = pressed_button;
     }
@@ -118,21 +130,23 @@ uint8_t observer_get_result(Gesture_Observer* observer)
 {
   uint8_t gesture_size = 0;
   uint8_t trace_size = 0;
+  uint8_t accuracy = 0;
+  uint8_t size_error = 0;
 
   for(uint8_t i = 0; i < observer->gesture_amount; i++)
   {
     gesture_size = observer->gestures[i].gesture_size;
     trace_size = observer->trace_size;
 
-    if(gesture_size == trace_size || gesture_size == trace_size + SIZE_ERROR_ALLOWANCE || gesture_size == trace_size - SIZE_ERROR_ALLOWANCE)
+    accuracy = observer->gestures[i].accuracy_error_allowance;
+    size_error = observer->gestures[i].size_error_allowance;
+
+    if(gesture_size >= trace_size - size_error && gesture_size <= trace_size + size_error)
     {
-      if(compare_array((uint8_t*)(&(observer->gestures[i].trace)),gesture_size, observer->current_trace, trace_size) >= (((gesture_size-ACCURACY_ERROR_ALLOWANCE) * 100) / gesture_size))
+      if(compare_array((uint8_t*)(&(observer->gestures[i].trace)),gesture_size, observer->current_trace, trace_size) >= 
+      (((gesture_size-accuracy) * 100) / gesture_size))
       {
         return observer->gestures[i].id;
-      }
-      else
-      {
-        compare_array((uint8_t*)(&(observer->gestures[i].trace)),gesture_size, observer->current_trace, trace_size);
       }
     }
   }

@@ -11,8 +11,8 @@
 // Both Macros have to be updated at the same time
 // one is used for the register value
 // the other is used to make further calculations possible
-#define TIMER1_PRESCALER_REGVAL TIMER1_PRESCALER_64
-#define TIMER1_PRESCALER_NUMBER 64
+#define TIMER1_PRESCALER_REGVAL TIMER1_PRESCALER_1024
+#define TIMER1_PRESCALER_NUMBER 1024
 
 #define TIMER1_SECOND (TIMER1_CLOCK / TIMER1_PRESCALER_NUMBER)
 #define TIMER1_MILLISECOND (TIMER1_SECOND / 1000)

@@ -1,6 +1,6 @@
 #include "mpr121.h"
 
-static void write_register(int i2c_address, int reg_value, int data)
+static void inline write_register(int i2c_address, int reg_value, int data)
 {
   i2c_start();
   i2c_write((i2c_address << 1) | WRITE_OPERATION);
@@ -9,7 +9,7 @@ static void write_register(int i2c_address, int reg_value, int data)
   i2c_stop();
 }
 
-uint8_t read_register(int i2c_address, int reg_value)
+static uint8_t inline read_register(int i2c_address, int reg_value)
 {
   uint8_t result = 0;
 
@@ -24,7 +24,7 @@ uint8_t read_register(int i2c_address, int reg_value)
   return result;
 }
 
-static void burst_read_register(uint8_t i2c_address, uint8_t start_register, uint8_t byte_amount, uint8_t* dst)
+static inline void burst_read_register(uint8_t i2c_address, uint8_t start_register, uint8_t byte_amount, uint8_t* dst)
 {
   i2c_start();
   i2c_write((i2c_address << 1) | WRITE_OPERATION);
@@ -77,7 +77,7 @@ void mpr121_get_filtered_pressed(uint8_t i2c_address, uint16_t* baseline, uint16
   for(uint8_t i = ELECTRODE_DATA_START; i <= ELECTRODE_DATA_END; i += ELECTRODE_DATA_INCREMENT)
   {
     current_data = read_register(i2c_address, i) | ((read_register(i2c_address, i+1) & 3) << 8);
-    if(current_data < (baseline[current_iter++] - 1))
+    if(current_data < (baseline[current_iter++] - 2))
     {
       *dst |= (1 << current_iter);
     }

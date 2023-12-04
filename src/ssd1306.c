@@ -173,6 +173,20 @@ void oled_clear()
   i2c_stop();
 }
 
+void oled_write_image(const char image[])
+{
+  i2c_start();
+  i2c_write(OLED_ADDR);
+  i2c_write(OLED_DAT_MODE);
+
+  for(uint16_t i = 0; i < 1024; i++)
+  {
+    i2c_write(pgm_read_word_near(image+i));
+  }
+
+  i2c_stop();
+}
+
 void oled_write_char(char c)
 {
   i2c_start();

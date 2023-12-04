@@ -29,7 +29,9 @@ void i2c_start()
 {
   // Start condition
   TWCR |= (1 << TWSTA) | (1 << TWEN) | (1 << TWINT);
+  TWSR |= 0xF8;
   while (!(TWCR & (1<<TWINT)));
+  TWSR |= 0xF8;
 }
 
 void i2c_stop()
@@ -43,9 +45,10 @@ void i2c_write(uint8_t data)
   // Write byte to the i2c data register
   TWDR = data;
   TWCR = (1 << TWINT) | (1 << TWEN);
+  TWSR |= 0xF8;
   while (!(TWCR & (1<<TWINT)));
+  TWSR |= 0xF8;
 }
-#include "ssd1306.h"
 
 int8_t i2c_read_ack()
 {

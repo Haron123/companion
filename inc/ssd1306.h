@@ -2,6 +2,7 @@
 #define SSD1306_H
 
 #include <avr/io.h>
+#include <avr/pgmspace.h>
 #include "i2c.h"
 
 // To get the oled addr, shift the actual i2c address one to the left
@@ -52,5 +53,7 @@ void oled_set_cursor(uint8_t x_pos, uint8_t y_pos);
  * @param byte the byte thats to be written
 */
 void oled_write_byte(uint8_t byte);
+
+void oled_write_image(const char* image);
 
 #endif

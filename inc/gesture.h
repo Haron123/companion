@@ -8,11 +8,13 @@ typedef uint8_t Button;
 #define MAX_TRACE 30
 #define MAX_GESTURES 5
 
-#define ACCURACY_ERROR_ALLOWANCE 2
-#define SIZE_ERROR_ALLOWANCE 2
+#define ACCURACY_ERROR_ALLOWANCE 3
+#define SIZE_ERROR_ALLOWANCE 3
 
 typedef struct Gesture
 {
+  uint8_t accuracy_error_allowance;
+  uint8_t size_error_allowance;
   uint8_t id;
   uint8_t gesture_size;
   Button trace[MAX_TRACE];
@@ -31,7 +33,7 @@ typedef struct Gesture_Observer
  * @brief Creates a gesture with the given id
  * @retval a gesture with the given id
 */
-Gesture gesture_create(uint8_t id);
+Gesture gesture_create(uint8_t id, uint8_t accuracy_error_allowance, uint8_t size_error_allowance);
 
 void gesture_add_trace(Gesture* gesture, Button trace);
 

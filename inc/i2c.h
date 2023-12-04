@@ -6,7 +6,7 @@
 
 // Change these to fit ur system
 #define CORE_CLOCK 16000000ULL
-#define SCL_FREQ 40000ULL
+#define SCL_FREQ 400000ULL
 
 // Gets calcualted by the core clock and scl freq macros
 #define TWBR_VALUE (((CORE_CLOCK / SCL_FREQ) - 16) / 2)
