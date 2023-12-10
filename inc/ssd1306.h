@@ -54,6 +54,10 @@ void oled_set_cursor(uint8_t x_pos, uint8_t y_pos);
 */
 void oled_write_byte(uint8_t byte);
 
+/**
+ * @brief writes a 128x64 image to the oled display
+ * @param image array that represents the image
+*/
 void oled_write_image(const char* image);
 
 #endif
