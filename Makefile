@@ -1,7 +1,7 @@
 #file makefile
 device := atmega328p
 cpufreq := 16000000
-port := /dev/ttyACM0
+port := /dev/ttyUSB0
 LDFLAGS :=
 
 CC := avr-gcc 
@@ -25,4 +25,4 @@ clean :
 	rm -rf $(CLEAN_TARGET)
 
 upload :
-	avrdude -F -V -c arduino -p $(device) -P $(port) -b 115200 -U flash:w:main.hex
+	avrdude -F -V -c arduino -p $(device) -P $(port) -b 57600 -U flash:w:main.hex

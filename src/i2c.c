@@ -38,6 +38,7 @@ void i2c_stop()
 {
   // Stop condition
   TWCR |= (1 << TWSTO) | (1 << TWEN) | (1 << TWINT);
+  TWSR |= 0xF8;
 }
 
 void i2c_write(uint8_t data)

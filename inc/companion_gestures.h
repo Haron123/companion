@@ -16,12 +16,12 @@ typedef struct Companion_Gestures
   uint8_t last_gesture_result;
   
   uint16_t pressed_pads;
-  uint16_t newly_pressed;
+  int16_t newly_pressed;
   uint16_t prev_pressed_pads;
   uint16_t baselines[12];
 } Companion_Gestures;
 
-Companion_Gestures companion_gestures_create();
+void companion_gestures_create(Companion_Gestures* cg);
 
 uint8_t companion_gestures_run(Companion_Gestures* cg);
 

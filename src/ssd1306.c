@@ -214,7 +214,7 @@ void oled_write_str(char* str)
 void oled_write_int(uint16_t number)
 {
 	uint16_t reverse_number = 0;
-	uint16_t overwrites = 2;
+	uint16_t overwrites = 3;
   uint16_t zeros = 0;
 
 	if(!number)

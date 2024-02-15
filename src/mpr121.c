@@ -61,8 +61,7 @@ void mpr121_get_filtered_baseline(uint8_t i2c_address, uint16_t* dst)
 
   for(uint8_t i = ELECTRODE_DATA_START; i <= ELECTRODE_DATA_END; i += ELECTRODE_DATA_INCREMENT)
   {
-    current_data = read_register(i2c_address, i);
-    current_data |= ((read_register(i2c_address, i+1) & 3) << 8);
+    current_data = read_register(i2c_address, i) | ((read_register(i2c_address, i+1) & 3) << 8);
     dst[current_iter++] = current_data;
   }
 }
@@ -81,6 +80,18 @@ void mpr121_get_filtered_pressed(uint8_t i2c_address, uint16_t* baseline, uint16
     {
       *dst |= (1 << current_iter);
     }
+  }
+}
+
+void mpr121_print_raw(uint8_t i2c_address)
+{
+  uint16_t current_data = 0;
+
+  oled_set_cursor(0,5);
+  for(uint8_t i = ELECTRODE_DATA_START; i <= ELECTRODE_DATA_END; i += ELECTRODE_DATA_INCREMENT)
+  {
+    current_data = read_register(i2c_address, i) | ((read_register(i2c_address, i+1) & 3) << 8);
+    oled_write_int(current_data);
   }
 }
 

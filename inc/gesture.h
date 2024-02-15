@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 
-typedef uint8_t Button;
+typedef int8_t Button;
 
-#define MAX_TRACE 30
+#define MAX_TRACE 15
 #define MAX_GESTURES 5
 
 #define ACCURACY_ERROR_ALLOWANCE 3

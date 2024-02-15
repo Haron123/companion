@@ -8,10 +8,10 @@
 #define INDIC_PORT PORTD
 #define INDIC_DDR DDRD
 
-#define INDIC_25_PIN PD0
-#define INDIC_50_PIN PD1
-#define INDIC_75_PIN PD2
-#define INDIC_100_PIN PD3
+#define INDIC_25_PIN (1 << PD3)
+//#define INDIC_50_PIN PD3
+#define INDIC_75_PIN (1 << PD5)
+#define INDIC_100_PIN (1 << PD6)
 
 #define LEVEL_0 0x00
 #define LEVEL_25 0x01

@@ -8,6 +8,7 @@ ELE = Electrode
 
 #include <i2c.h>
 #include <stdint.h>
+#include <ssd1306.h>
 
 /* Touch Status Register*/
 #define T_STATUS_L 0x00
@@ -66,5 +67,7 @@ void mpr121_get_filtered_pressed(uint8_t i2c_address, uint16_t* baseline, uint16
 void mpr121_set_threshold(uint8_t i2c_address, uint8_t touch, uint8_t release);
 
 int8_t mpr121_get_specific_pressed(uint16_t pressed_pads);
+
+void mpr121_print_raw(uint8_t i2c_address);
 
 #endif

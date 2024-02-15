@@ -103,7 +103,7 @@ void observer_add_gesture(Gesture_Observer* observer, Gesture gesture)
 */
 void observer_inform(Gesture_Observer* observer, Button pressed_button)
 {
-  if(observer->trace_size < MAX_TRACE)
+  if(observer->trace_size <= MAX_TRACE)
   {
     if(observer->trace_size == 0 || (observer->trace_size > 0 && observer->current_trace[observer->trace_size-1] != pressed_button))
     {
